@@ -1,0 +1,17 @@
+#title {
+  font-family: Trebuchet;
+  color: blue;
+  font-size: 10em;
+}
+
+
+
+.lyrics {
+  font-family: Times;
+  color: red;
+}
+
+#check_text {
+ font-family: Helvetica;
+ font-weight: bolder; 
+}

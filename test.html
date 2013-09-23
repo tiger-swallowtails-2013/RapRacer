@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script type="text/javascript" src="script.js"></script>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css">
+  <title>Document</title>
+</head>
+<body>
+  <div id="title" onClick="sentenceReader()">this is a song</div>
+
+  <div class="lyrics">other lyrics</div>
+  <div class="lyrics">some lyrics</div>
+  <div class="lyrics">other lyrics</div>
+  <div class="lyrics">some lyrics</div>
+  <p><input type="button" onClick="nextWord()" value = "this is not awesome"></p>
+  
+  <div id="sentence">the great brown fox jumps over the yellow log</div>
+
+  <div id="lyrics">type the following text: <span id="check_text">awesome.</span></div>
+  <form name="inputter" onSubmit="wordChecker(name,'check_text','input_text'); return false;">
+    <input type="text" name="input_text">
+    <input type="submit">
+  </form>
+</body>
+</html>
+
+
