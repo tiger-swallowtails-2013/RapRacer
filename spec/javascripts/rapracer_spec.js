@@ -54,3 +54,28 @@ describe("inputWordChecker", function() {
   });
 });
 
+describe("userFeedback", function() {
+    beforeEach(function() {
+    createDomElement('textarea','user_bad_input')
+    document.getElementById('user_bad_input').value = "raorao";
+    
+    createDomElement('textarea','user_good_input')
+    document.getElementById('user_good_input').value = "Let";
+
+    createDomElement('span','current_word')
+    document.getElementById('current_word').innerText = "Let";
+  });
+
+  it("should let the user know if the WordChecker returned true", function() { 
+    expect(userFeedback('user_good_input', 'current_word')).toEqual(true);
+  })
+
+  it("should let the user know if the WordChecker returned false", function() { 
+    expect(userFeedback('user_bad_input', 'current_word')).toEqual(false);
+  })
+})
+
+
+
+
+
