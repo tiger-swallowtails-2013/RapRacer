@@ -66,7 +66,6 @@ describe("Timing Race", function() {
     waits(200);
     runs(function() {
       timer.stop();
-      // alert(timer.totalRaceTime());
       expect(timer.totalRaceTime()).toBeGreaterThan(0.199);
     });
   });
