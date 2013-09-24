@@ -1,0 +1,11 @@
+div#lyric {
+  width: 330px;
+}
+
+span.current {
+  background: slateblue;
+}
+
+input.error {
+  border: 3px solid red;
+}

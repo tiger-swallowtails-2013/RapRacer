@@ -28,5 +28,3 @@ describe("Tracking which word the player is on", function() {
     expect(LyricText.current_word()).toEqual(null);
   });
 });
-
-
