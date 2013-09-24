@@ -24,11 +24,11 @@ function highlight(text,index_value) {
 
 describe("wordChecker", function() {
   it("should check words, return true if words match", function() {
-    expect(wordChecker("word","word")).toEqual(true);
+    expect(inputChecker.wordChecker("word","word")).toEqual(true);
   });
 
   it("should check words, return false if they don't match", function() {
-    expect(wordChecker("word","otherword")).toEqual(false);
+    expect(inputChecker.wordChecker("word","otherword")).toEqual(false);
   });
 });
 
@@ -45,12 +45,12 @@ describe("inputWordChecker", function() {
   });
 
   it ("should get values of two ids, return false if no match", function() {
-    expect(inputWordChecker('user_bad_input','current_word')).toEqual(false);
+    expect(inputChecker.inputWordChecker('user_bad_input','current_word')).toEqual(false);
   });
  
 
   it ("should get values of two ids, return true if match", function() {
-    expect(inputWordChecker('user_good_input','current_word')).toEqual(true);
+    expect(inputChecker.inputWordChecker('user_good_input','current_word')).toEqual(true);
   });
 });
 
@@ -67,11 +67,11 @@ describe("userFeedback", function() {
   });
 
   it("should let the user know if the WordChecker returned true", function() { 
-    expect(userFeedback('user_good_input', 'current_word')).toEqual(true);
+    expect(inputChecker.userFeedback('user_good_input', 'current_word')).toEqual(true);
   })
 
   it("should let the user know if the WordChecker returned false", function() { 
-    expect(userFeedback('user_bad_input', 'current_word')).toEqual(false);
+    expect(inputChecker.userFeedback('user_bad_input', 'current_word')).toEqual(false);
   })
 })
 
