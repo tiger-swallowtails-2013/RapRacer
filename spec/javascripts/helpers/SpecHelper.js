@@ -1,9 +1,5 @@
-beforeEach(function() {
-  this.addMatchers({
-    toBePlaying: function(expectedSong) {
-      var player = this.actual;
-      return player.currentlyPlayingSong === expectedSong && 
-             player.isPlaying;
-    }
-  });
-});
+var createDomElement = function(element_type, element_id) {
+  var element = document.createElement(element_type)
+  element.id = element_id
+  document.body.appendChild(element)
+}
