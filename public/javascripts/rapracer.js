@@ -8,9 +8,19 @@ var RapRacer = (function() {
       lyric_el = document.getElementById('lyric');
       lyric = new Lyric(lyric_el.innerText);
     },
+
     lyric: function() {
       return lyric.text();
+    },
+
+    printHighlightedLyric: function() {
+      lyric_el.innerHTML = lyric.highlightedText();
+    },
+
+    goToNextWord: function() {
+      lyric.nextWord();
     }
+
   };
 })();
 

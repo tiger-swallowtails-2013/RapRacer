@@ -76,21 +76,35 @@ function highlight(text,index_value) {
 // })
 
 describe("RapRacer", function() {
-  var dom_lyric;
+  var dom_lyric, lyric_text;
 
   beforeEach(function() {
-    dom_lyric = "I'm not a businessman, I'm a business, man";
-    createDomElement('div','lyric');
-    document.getElementById('lyric').innerHTML = dom_lyric;
+    lyric_text = "I'm not a businessman, I'm a business, man";
+    dom_lyric = document.createElement('div');
+    dom_lyric.id = 'lyric';
+    document.body.appendChild(dom_lyric);
+
+    dom_lyric.innerHTML = lyric_text;
     RapRacer.init();
   });
 
-  it("has a lyric object that matches lyric value raorao'd in DOM", function() {
-    expect(RapRacer.lyric()).toEqual(dom_lyric);
+  afterEach(function() {
+    document.body.removeChild(dom_lyric);
   });
 
-  it("", function() {
-    
+  it("has a lyric object that matches lyric value raorao'd in DOM", function() {
+    expect(RapRacer.lyric()).toEqual(lyric_text);
+  });
+
+  it("highlights current word on lyric element in the DOM", function() {
+    RapRacer.printHighlightedLyric();
+    expect(dom_lyric.innerHTML).toContain("<span id=\"highlighted\">I'm</span> not a");
+  });
+
+  it("goToNextWord sets current word to next word", function() {
+    RapRacer.goToNextWord();
+    RapRacer.printHighlightedLyric();
+    expect(dom_lyric.innerHTML).toContain("I'm <span id=\"highlighted\">not</span> a businessman");
   });
 });
 
