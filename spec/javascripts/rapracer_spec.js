@@ -76,12 +76,21 @@ function highlight(text,index_value) {
 // })
 
 describe("RapRacer", function() {
-  it("has a lyric object that matches lyric value raorao'd in DOM", function() {
-    var dom_lyric = "I'm not a business man, I'm a business, man";
+  var dom_lyric;
+
+  beforeEach(function() {
+    dom_lyric = "I'm not a businessman, I'm a business, man";
     createDomElement('div','lyric');
     document.getElementById('lyric').innerHTML = dom_lyric;
+    RapRacer.init();
+  });
 
+  it("has a lyric object that matches lyric value raorao'd in DOM", function() {
     expect(RapRacer.lyric()).toEqual(dom_lyric);
+  });
+
+  it("", function() {
+    
   });
 });
 
