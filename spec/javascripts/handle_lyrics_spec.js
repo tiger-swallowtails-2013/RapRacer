@@ -37,4 +37,10 @@ describe("Lyric", function() {
     expect(lyric.highlightedText()).toEqual(result);
   });
 
+  it(".highlightedText() returns lyric with second word highlighted if .nextWord() was called once", function() {
+    lyric.nextWord();
+    var result = 'world <span id="highlighted">series</span> attutide, champaigne bottle life'
+    expect(lyric.highlightedText()).toEqual(result);
+  });
+
 });
