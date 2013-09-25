@@ -63,10 +63,10 @@ describe("Timing Race", function() {
     var timer = new TimingRace();
     timer.start();
 
-    waits(200);
+    waits(50);
     runs(function() {
       timer.stop();
-      expect(timer.totalRaceTime()).toBeGreaterThan(0.199);
+      expect(timer.totalRaceTime()).toBeGreaterThan(0.049);
     });
   });
 });
