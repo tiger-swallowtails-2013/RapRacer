@@ -15,3 +15,14 @@ Lyric.prototype.words = function(index) {
 Lyric.prototype.currentWord = function() {
   return this.lyric_words[this.current_word_index];
 }
+
+Lyric.prototype.nextWord = function() {
+  this.current_word_index += 1
+}
+
+Lyric.prototype.highlightedText = function() {
+  // soft duplicate array
+  var temp = this.lyric_words.slice(0);
+  temp[this.current_word_index] = '<span id="highlighted">' + temp[this.current_word_index] + '</span>'
+  return temp.join(' ');
+}

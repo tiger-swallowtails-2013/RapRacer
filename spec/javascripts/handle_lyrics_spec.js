@@ -19,11 +19,22 @@ describe("Lyric", function() {
     expect(lyric.words(1)).toEqual('series');
   });
 
-  it (".words(9) method returns undefined", function() {
+  it(".words(9) method returns undefined", function() {
     expect(lyric.words(9)).toBeUndefined();
   });
 
-  it ("first call of .currentWord returns first word", function() {
+  it("first call of .currentWord returns first word", function() {
     expect(lyric.currentWord()).toEqual('world');
   });
+
+  it("calling .nextWord() once makes call to .currentWord() return the second word", function() {
+    lyric.nextWord();
+    expect(lyric.currentWord()).toEqual('series');
+  });
+
+  it(".highlightedText() returns lyric with current word highlighted", function() {
+    var result = '<span id="highlighted">world</span> series attutide, champaigne bottle life'
+    expect(lyric.highlightedText()).toEqual(result);
+  });
+
 });
