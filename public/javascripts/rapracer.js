@@ -1,12 +1,14 @@
 
 var RapRacer = (function() {
-  var lyric_el, lyric;
+  var lyric_el, lyric, started, timer;
 
 
   return {
     init: function() {
       lyric_el = document.getElementById('lyric');
       lyric = new Lyric(lyric_el.innerText);
+      started = false;
+      timer = new TimingRace();
     },
 
     lyric: function() {
@@ -19,8 +21,28 @@ var RapRacer = (function() {
 
     goToNextWord: function() {
       lyric.nextWord();
-    }
+    },
 
+    hasStarted: function() {
+      return started;
+    },
+
+    start: function() {
+      started = true;
+      timer.start();
+    },
+
+    hasFinished: function() {
+      return started && !timer.isTimerOn();
+    },
+
+    finish: function() {
+      timer.stop();
+    },
+
+    playerTime: function() {
+      return timer.totalRaceTime();
+    }
   };
 })();
 

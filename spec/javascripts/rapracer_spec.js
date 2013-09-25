@@ -1,27 +1,3 @@
-function highlight(text,index_value) {
-
-}
-
-// describe("Highlighting Words", function() {
-//   it("highlights the first word", function() {
-//     expect(highlight("the full block of text", 0)).toEqual('<span class="current">the</span> full block of text');
-//   });
-//   it("highlights the second instance of that word", function() {
-//     expect(highlight("hi hi", 1)).toEqual('hi <span class="current">hi</span>');
-//   });
-// });
-
-
-// describe("Tracking which word the player is on", function() {
-
-// });
-
-// describe("Telling the highlighter which word the player is on", function() {
-
-// });
-
-
-
 // describe("wordChecker", function() {
 //   it("should check words, return true if words match", function() {
 //     expect(inputChecker.wordChecker("word","word")).toEqual(true);
@@ -96,16 +72,45 @@ describe("RapRacer", function() {
     expect(RapRacer.lyric()).toEqual(lyric_text);
   });
 
-  it("highlights current word on lyric element in the DOM", function() {
+  it(".printHighlightedLyric() highlights current word on lyric element in the DOM", function() {
     RapRacer.printHighlightedLyric();
     expect(dom_lyric.innerHTML).toContain("<span id=\"highlighted\">I'm</span> not a");
   });
 
-  it("goToNextWord sets current word to next word", function() {
+  it(".goToNextWord() sets current word to next word", function() {
     RapRacer.goToNextWord();
     RapRacer.printHighlightedLyric();
     expect(dom_lyric.innerHTML).toContain("I'm <span id=\"highlighted\">not</span> a businessman");
   });
+
+  it(".hasStarted() returns false if the game didn't start", function() {
+    expect(RapRacer.hasStarted()).toBeFalsy();
+  });
+
+  it(".start() starts game", function() {
+    RapRacer.start();
+    expect(RapRacer.hasStarted()).toBeTruthy();
+  });
+
+  it(".hasFinished() returns false if game didn't start or is happening", function() {
+    expect(RapRacer.hasFinished()).toBeFalsy();
+  });
+
+  it(".finish() finished game", function() {
+    RapRacer.start();
+    RapRacer.finish();
+    expect(RapRacer.hasFinished()).toBeTruthy();
+  });
+
+  it("playerTime returns players time after game completion", function() {
+    RapRacer.start();
+    waits(50);
+    runs(function() {
+      RapRacer.finish();
+      expect(RapRacer.playerTime()).toBeGreaterThan(0.049);
+    });
+  })
+
 });
 
 
