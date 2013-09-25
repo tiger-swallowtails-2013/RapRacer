@@ -1,14 +1,17 @@
 
 var RapRacer = (function() {
-  var lyric_el = document.getElementById('lyric'),
-      lyric = new Lyric(lyric_el.innerText);
+  var lyric_el, lyric;
 
 
   return {
+    init: function() {
+      lyric_el = document.getElementById('lyric');
+      lyric = new Lyric(lyric_el.innerText);
+    },
     lyric: function() {
       return lyric.text();
     }
-  }
+  };
 })();
 
 
