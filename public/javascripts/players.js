@@ -1,7 +1,11 @@
+function Player() {
+  this.current_position = 0;
+}
 
-function Player() {}
+Player.prototype.position = function() {
+  return this.current_position;
+};
 
-Player.prototype.position = function(){
-  this.start_position = 0;
-  return this.start_position;
+Player.prototype.move = function(move_by) {
+  this.current_position += move_by;
 };
