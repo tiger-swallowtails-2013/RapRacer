@@ -21,7 +21,11 @@ Lyric.prototype.nextWord = function() {
 }
 
 Lyric.prototype.highlightedText = function() {
-  // soft duplicate array
+  if (this.current_word_index >= this.lyric_words.length) {
+    return this.lyric
+  }
+
+  // soft duplication of array
   var temp = this.lyric_words.slice(0);
   temp[this.current_word_index] = '<span id="highlighted">' + temp[this.current_word_index] + '</span>'
   return temp.join(' ');
