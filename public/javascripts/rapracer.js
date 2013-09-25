@@ -64,14 +64,7 @@ var inputChecker = {
   },
 
   userFeedback: function(input_id, check_id) {
-    var result = this.inputWordChecker(input_id, check_id)
-    if (result === true ) {
-      // alert('You did it!')
-    }
-    else {
-      // alert('You suck')
-    }
-    return result
+    return this.inputWordChecker(input_id, check_id)
   }
 
 };
