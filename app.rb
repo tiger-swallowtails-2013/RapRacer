@@ -38,7 +38,7 @@ end
 song = Song.new("Jay-z-99-problems-lyrics")
 
 get '/' do  
-  @lyrics = song.lyric_text
+  @lyric = song.lyric_text
   @title = song.title
   @artist = song.artist
   @explanation = song.explanation
