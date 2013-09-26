@@ -12,7 +12,7 @@ describe("Lyric", function() {
     dom_lyric.innerHTML = lyric_text;
 
     lyric = new Lyric();
-  })
+  });
 
   afterEach(function() {
     document.body.removeChild(dom_lyric);
