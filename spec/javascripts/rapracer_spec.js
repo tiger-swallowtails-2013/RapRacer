@@ -21,9 +21,9 @@ describe("inputWordChecker", function() {
   });
 
   afterEach(function() {
-    document.body.removeChild(document.getElementById('user_bad_input'))
-    document.body.removeChild(document.getElementById('user_good_input'))
-    document.body.removeChild(document.getElementById('current_word'))
+    document.body.removeChild(document.getElementById('user_bad_input'));
+    document.body.removeChild(document.getElementById('user_good_input'));
+    document.body.removeChild(document.getElementById('current_word'));
   });
 
   it ("should get values of two ids, return false if no match", function() {
@@ -38,20 +38,20 @@ describe("inputWordChecker", function() {
 
 describe("userFeedback", function() {
     beforeEach(function() {
-    createDomElement('textarea','user_bad_input')
+    createDomElement('textarea','user_bad_input');
     document.getElementById('user_bad_input').value = "raorao";
 
-    createDomElement('textarea','user_good_input')
+    createDomElement('textarea','user_good_input');
     document.getElementById('user_good_input').value = "Let";
 
-    createDomElement('span','current_word')
+    createDomElement('span','current_word');
     document.getElementById('current_word').innerText = "Let";
   });
 
   afterEach(function() {
-    document.body.removeChild(document.getElementById('user_bad_input'))
-    document.body.removeChild(document.getElementById('user_good_input'))
-    document.body.removeChild(document.getElementById('current_word'))
+    document.body.removeChild(document.getElementById('user_bad_input'));
+    document.body.removeChild(document.getElementById('user_good_input'));
+    document.body.removeChild(document.getElementById('current_word'));
   });
 
   it("should let the user know if the WordChecker returned true", function() {
@@ -64,14 +64,25 @@ describe("userFeedback", function() {
 });
 
 describe("RapRacer", function() {
+  var textbox;
   var dom_lyric, lyric_text;
 
   beforeEach(function() {
+    
+    textbox = document.createElement('textarea');
+    textbox.id = 'user_input';
+    document.body.appendChild(textbox);
 
     var fakeLyric = {
       nextWord: function() {}
-    }
+    };
     RapRacer.init(fakeLyric);
+
+
+  });
+
+  afterEach(function() {
+    document.body.removeChild(textbox);
   });
 
 
@@ -101,7 +112,13 @@ describe("RapRacer", function() {
       RapRacer.finish();
       expect(RapRacer.playerTime()).toBeGreaterThan(0.049);
     });
-  })
+  });
+
+  it("user input event should add error class to the text box if current value doesn't match with current word", function() {
+    textbox.value = 'myVal';
+    textbox.dispatchEvent(new Event('input'));
+    expect(textbox.className).toEqual('error');
+  });
 
 
 });

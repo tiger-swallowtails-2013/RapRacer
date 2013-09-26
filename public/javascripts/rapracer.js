@@ -2,12 +2,12 @@
 var RapRacer = (function() {
   var started, timer;
 
-
   return {
     init: function(lyric) {
       this.lyric = lyric || new Lyric();
       started = false;
       timer = new TimingRace();
+      this.bindListeners();
     },
     goToNextWord: function() {
       this.lyric.nextWord();
@@ -32,7 +32,15 @@ var RapRacer = (function() {
 
     playerTime: function() {
       return timer.totalRaceTime();
+    },
+
+    bindListeners: function() {
+      var input = document.getElementById('user_input');
+      input.addEventListener('input', function(e) {
+        return e;
+      });
     }
+
   };
 })();
 
@@ -54,3 +62,4 @@ var inputChecker = {
 
 };
 
+RapRacer.init();
