@@ -10,7 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130926185531) do
+ActiveRecord::Schema.define(version: 20130926220315) do
+
+  create_table "lyrics", force: true do |t|
+    t.string  "explanation"
+    t.string  "text"
+    t.integer "song_id"
+  end
 
   create_table "songs", force: true do |t|
     t.string   "artist"
