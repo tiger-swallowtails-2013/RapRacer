@@ -29,6 +29,6 @@ Lyric.prototype.highlightText = function() {
 
   // soft duplication of array
   var temp = this.lyricArray().slice(0);
-  temp[this.current_word_index] = '<span id="highlighted">' + temp[this.current_word_index] + '</span>'
+  temp[this.current_word_index] = '<span class="highlighted">' + temp[this.current_word_index] + '</span>'
   this.element().innerHTML = temp.join(' ');
 }
