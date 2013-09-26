@@ -1,26 +1,16 @@
 
 var RapRacer = (function() {
-  var lyric_el, lyric, started, timer;
+  var started, timer;
 
 
   return {
-    init: function() {
-      lyric_el = document.getElementById('lyric');
-      lyric = new Lyric(lyric_el.innerText);
+    init: function(lyric) {
+      this.lyric = lyric || new Lyric();
       started = false;
       timer = new TimingRace();
     },
-
-    lyric: function() {
-      return lyric.text();
-    },
-
-    printHighlightedLyric: function() {
-      lyric_el.innerHTML = lyric.highlightedText();
-    },
-
     goToNextWord: function() {
-      lyric.nextWord();
+      this.lyric.nextWord();
     },
 
     hasStarted: function() {
@@ -45,6 +35,8 @@ var RapRacer = (function() {
     }
   };
 })();
+
+
 
 
 
