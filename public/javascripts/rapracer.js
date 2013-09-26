@@ -1,3 +1,47 @@
+
+var RapRacer = (function() {
+  var started, timer;
+
+
+  return {
+    init: function(lyric) {
+      this.lyric = lyric || new Lyric();
+      started = false;
+      timer = new TimingRace();
+    },
+    goToNextWord: function() {
+      this.lyric.nextWord();
+    },
+
+    hasStarted: function() {
+      return started;
+    },
+
+    start: function() {
+      started = true;
+      timer.start();
+    },
+
+    hasFinished: function() {
+      return started && !timer.isTimerOn();
+    },
+
+    finish: function() {
+      timer.stop();
+    },
+
+    playerTime: function() {
+      return timer.totalRaceTime();
+    }
+  };
+})();
+
+
+
+
+
+
+
 var inputChecker = {
 
   wordChecker: function(word1,word2) {
@@ -12,14 +56,7 @@ var inputChecker = {
   },
 
   userFeedback: function(input_id, check_id) {
-    var result = this.inputWordChecker(input_id, check_id)
-    if (result === true ) {
-      // alert('You did it!')
-    }
-    else {
-      // alert('You suck')
-    }
-    return result
+    return this.inputWordChecker(input_id, check_id)
   }
 
 };
