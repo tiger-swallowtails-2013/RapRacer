@@ -1,3 +1,5 @@
+require "sinatra/activerecord/rake"
+require_relative "app"
 
 begin
   require 'jasmine'
