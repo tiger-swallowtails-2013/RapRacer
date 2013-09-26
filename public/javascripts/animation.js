@@ -5,15 +5,15 @@ document.addEventListener('readystatechange', function(){
   }
 });
 
-var left_quantity = 0;
 
 var moveCharacter = function(id, event_activator){
+  var left_quantity = 0;
   var character = document.getElementById(id);
   character.addEventListener(event_activator, function(){ 
     left_quantity = left_quantity + 50;
     character.style.left = left_quantity;
 
   });
-}
+};
     
 
