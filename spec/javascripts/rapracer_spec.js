@@ -10,13 +10,13 @@ describe("wordChecker", function() {
 
 describe("inputWordChecker", function() {
   beforeEach(function() {
-    createDomElement('textarea','user_bad_input')
+    createDomElement('textarea','user_bad_input');
     document.getElementById('user_bad_input').value = "raorao";
 
-    createDomElement('textarea','user_good_input')
+    createDomElement('textarea','user_good_input');
     document.getElementById('user_good_input').value = "Let";
 
-    createDomElement('span','current_word')
+    createDomElement('span','current_word');
     document.getElementById('current_word').innerText = "Let";
   });
 
@@ -68,23 +68,22 @@ describe("RapRacer", function() {
   var dom_lyric, lyric_text;
 
   beforeEach(function() {
+    dom_lyric = document.createElement('div');
+    dom_lyric.id = 'lyric';
+    dom_lyric.innerHTML = "Let the suicide doors up I threw suicides";
+    document.body.appendChild(dom_lyric);
     
     textbox = document.createElement('textarea');
     textbox.id = 'user_input';
     document.body.appendChild(textbox);
 
-    var fakeLyric = {
-      nextWord: function() {}
-    };
-    RapRacer.init(fakeLyric);
-
-
+    RapRacer.init();
   });
 
   afterEach(function() {
+    document.body.removeChild(dom_lyric);
     document.body.removeChild(textbox);
   });
-
 
   it(".hasStarted() returns false if the game didn't start", function() {
     expect(RapRacer.hasStarted()).toBeFalsy();
@@ -120,7 +119,17 @@ describe("RapRacer", function() {
     expect(textbox.className).toEqual('error');
   });
 
+  it("treats empty values as valid matches", function() {
+    textbox.value = '';
+    textbox.dispatchEvent(new Event('input'));
+    expect(textbox.className).not.toEqual('error');
+  });
 
+  it("handle exceptions in case of invalid inputs", function() {
+    textbox.value = '\\?';
+    textbox.dispatchEvent(new Event('input'));
+    expect(textbox.className).toEqual('error');
+  });
 });
 
 

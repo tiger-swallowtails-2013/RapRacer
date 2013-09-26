@@ -1,10 +1,11 @@
 
 var RapRacer = (function() {
-  var started, timer;
+  var started, timer, input;
 
   return {
     init: function(lyric) {
       this.lyric = lyric || new Lyric();
+      input = document.getElementById('user_input');
       started = false;
       timer = new TimingRace();
       this.bindListeners();
@@ -35,12 +36,24 @@ var RapRacer = (function() {
     },
 
     bindListeners: function() {
-      var input = document.getElementById('user_input');
+      var self = this;
       input.addEventListener('input', function(e) {
-        return e;
+        if (!self.matchWord(input.value)) {
+          input.className = 'error';
+        }
       });
-    }
+    },
 
+    matchWord: function(value) {
+      var regex;
+      try {
+        regex = new RegExp('^' + value);
+      } catch(e) {
+        return false;
+      }
+
+      return !!this.lyric.currentWord().match(regex);
+    }
   };
 })();
 
@@ -61,5 +74,3 @@ var inputChecker = {
   }
 
 };
-
-RapRacer.init();
