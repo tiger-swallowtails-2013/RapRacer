@@ -130,6 +130,26 @@ describe("RapRacer", function() {
     textbox.dispatchEvent(new Event('input'));
     expect(textbox.className).toEqual('error');
   });
+
+  it("user input event should not add error class to the text box if current value matches with current word", function() {
+    textbox.value = 'L';
+    textbox.dispatchEvent(new Event('input'));
+    expect(textbox.className).not.toEqual('error');
+  });
+
+  it("valid user input should remove 'error' class to the text box", function() {
+    textbox.value = 'Ler';
+    textbox.dispatchEvent(new Event('input'));
+    textbox.value = 'Le';
+    textbox.dispatchEvent(new Event('input'));
+    expect(textbox.className).not.toEqual('error');
+  });
+
+  it("go to the next word if the last character was ' ' & match is the exact current word", function() {
+    textbox.value = "Let ";
+    textbox.dispatchEvent(new Event('input'));
+    expect(RapRacer.lyric.currentWord()).toEqual('the');
+  });
 });
 
 

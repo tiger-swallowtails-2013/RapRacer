@@ -38,7 +38,11 @@ var RapRacer = (function() {
     bindListeners: function() {
       var self = this;
       input.addEventListener('input', function(e) {
-        if (!self.matchWord(input.value)) {
+        if (self.matchWord(input.value)) {
+          input.className = '';
+          console.log(e);
+        }
+        else {
           input.className = 'error';
         }
       });
