@@ -40,9 +40,8 @@ describe("Lyric", function() {
     expect(lyric.currentWord()).toEqual('series');
   });
 
-  it("calling .lengthOf() returns length of lyric", function() {
-    lyric.lengthOf();
-    expect(lyric.lengthOf()).toEqual(45);
+  it("calling .word_count() returns length of lyric", function() {
+    expect(lyric.word_count()).toEqual(6);
   });
 
 });

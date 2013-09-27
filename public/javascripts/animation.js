@@ -1,24 +1,20 @@
 
 var character = {
 
-  rapLength: function() {
+  words: function() {
     lyric = new Lyric
-    return lyric.lengthOf()
+    return lyric.word_count()
   },
 
-  left_quantity: 0,
+  left_pos: 0,
 
-  moveCharacter: function(id, event_activator, left_pos){
-    var textbox = document.getElementById(id);
+  moveCharacter: function(){
     this.avatar = document.getElementById('character_image');
-    this.left_pos = left_pos;
-    textbox.addEventListener(event_activator, function(){ 
-      character.handleInput();
-    });
+    character.handleInput();
   },
 
   calcCharacterMovement: function() {
-    var percent = 100/character.rapLength();
+    var percent = 100/character.words();
     return percent;
   },
 

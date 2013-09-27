@@ -85,9 +85,7 @@ describe("RapRacer", function() {
     document.body.removeChild(dom_lyric);
     document.body.removeChild(textbox);
   });
-  it("calls moveCharacter on character", function() {
-    expect(character.moveCharacter).toHaveBeenCalledWith('user_input', 'input', 0)
-  })
+ 
 
   it(".hasStarted() returns false if the game didn't start", function() {
     expect(RapRacer.hasStarted()).toBeFalsy();
@@ -198,25 +196,25 @@ describe("animation", function() {
     document.body.removeChild(textbox)
   });
 
-  it("should know the length of the rap lyric", function() {
-    expect(character.rapLength()).toEqual(41)
+  it("should know the number of words in the rap lyric", function() {
+    expect(character.words()).toEqual(8)
   });
 
   it('should calcuate character movement based on rapLength', function() {
-    expect(character.calcCharacterMovement()).toBeGreaterThan(2.4)
+    expect(character.calcCharacterMovement()).toBeGreaterThan(12.4)
   });
 
-  it('should call character.handleInput', function() {
-    spyOn(character, 'handleInput');
+  // it('should call character.handleInput', function() {
+  //   spyOn(character, 'handleInput');
 
-    textbox.dispatchEvent(new Event('input'));
+  //   textbox.dispatchEvent(new Event('input'));
     
-    expect(character.handleInput).toHaveBeenCalled();
-  })
-  it('should move the character based on what calcCharacterMovement() returns', function() {
-    textbox.dispatchEvent(new Event('input'));
-
-    expect(parseFloat(character_image.style.left)).toBeGreaterThan(2.4);
+  //   expect(character.handleInput).toHaveBeenCalled();
+  // })
+  it('should move the character based on RapRacer going to next word', function() {
+    // textbox.dispatchEvent(new Event('input'));
+    RapRacer.goToNextWord()
+    expect(parseFloat(character_image.style.left)).toBeGreaterThan(12.4);
 
 
   })
