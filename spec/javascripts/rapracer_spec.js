@@ -77,7 +77,7 @@ describe("RapRacer", function() {
     textbox = document.createElement('textarea');
     textbox.id = 'user_input';
     document.body.appendChild(textbox);
-
+    spyOn(character, 'moveCharacter');
     RapRacer.init();
   });
 
@@ -85,6 +85,9 @@ describe("RapRacer", function() {
     document.body.removeChild(dom_lyric);
     document.body.removeChild(textbox);
   });
+  it("calls moveCharacter on character", function() {
+    expect(character.moveCharacter).toHaveBeenCalledWith('user_input', 'input', 0)
+  })
 
   it(".hasStarted() returns false if the game didn't start", function() {
     expect(RapRacer.hasStarted()).toBeFalsy();
@@ -182,17 +185,17 @@ describe("animation", function() {
     character_image.style.left = '0%';
     document.body.appendChild(character_image);
     
-    character_position = character_image.style.left;
     textbox = document.createElement('textarea');
     textbox.id = 'user_input';
     document.body.appendChild(textbox);
+
+    character.moveCharacter('user_input', 'input', 0);
   });
 
   afterEach(function() {
-    // document.body.removeChild(dom_lyric)
-    // document.body.removeChild(character_image)
-    // document.body.removeChild(textbox)
-
+    document.body.removeChild(dom_lyric)
+    document.body.removeChild(character_image)
+    document.body.removeChild(textbox)
   });
 
   it("should know the length of the rap lyric", function() {
@@ -203,10 +206,17 @@ describe("animation", function() {
     expect(character.calcCharacterMovement()).toBeGreaterThan(2.4)
   });
 
+  it('should call character.handleInput', function() {
+    spyOn(character, 'handleInput');
+
+    textbox.dispatchEvent(new Event('input'));
+    
+    expect(character.handleInput).toHaveBeenCalled();
+  })
   it('should move the character based on what calcCharacterMovement() returns', function() {
     textbox.dispatchEvent(new Event('input'));
 
-    expect(parseInt(character_position)).toBeGreaterThan(2.4);
+    expect(parseFloat(character_image.style.left)).toBeGreaterThan(2.4);
 
 
   })
