@@ -42,15 +42,15 @@ var RapRacer = (function() {
       input.addEventListener('input', function(e) {
         var isValidMatch = false;
 
-        if (self.isLastCharASpace()) {
-          if (self.isExactMatch()) {
+        if (self.__isLastCharASpace()) {
+          if (self.__isExactMatch()) {
             isValidMatch = true;
             self.goToNextWord();
             input.value = '';
           }
         }
         else {
-          if (self.matchWord(input.value)) {
+          if (self.__matchWord(input.value)) {
             isValidMatch = true;
           }
         }
@@ -64,7 +64,7 @@ var RapRacer = (function() {
       });
     },
 
-    isLastCharASpace: function() {
+    __isLastCharASpace: function() {
       var isSpace = false;
       if (input.value.length) {
         isSpace = input.value[input.value.length - 1] === ' ';
@@ -72,15 +72,15 @@ var RapRacer = (function() {
       return isSpace;
     },
 
-    isExactMatch: function() {
-      return (this.valueWithoutSpace() === this.lyric.currentWord());
+    __isExactMatch: function() {
+      return (this.__valueWithoutSpace() === this.lyric.currentWord());
     },
 
-    valueWithoutSpace: function() {
+    __valueWithoutSpace: function() {
       return input.value.substr(0, input.value.length - 1);
     },
 
-    matchWord: function(value) {
+    __matchWord: function(value) {
       var regex;
       try {
         regex = new RegExp('^' + value);
