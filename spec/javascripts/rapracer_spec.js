@@ -160,11 +160,30 @@ describe("RapRacer", function() {
     expect(dom_lyric.innerHTML).toEqual(lyric_text);
   });
 
-  it("should print the users score after completion", function() {
+  xit("should print the users score after completion", function() {
     var total_words = lyric_text.split(" ").length;
     while (total_words--) {
       RapRacer.goToNextWord();
     }
+  });
+
+  describe("handles game start and finish", function() {
+    it("timer start when first key is pressed", function() {
+      textbox.dispatchEvent(new Event('keydown'));
+      expect(RapRacer.hasStarted()).toBeTruthy();
+    });
+
+    it("timer starts only once", function() {
+      spyOn(RapRacer, 'start');
+      textbox.dispatchEvent(new Event('keydown'));
+      textbox.dispatchEvent(new Event('keydown'));
+      
+      expect(RapRacer.start.callCount).toEqual(1);
+    });
+
+    xit("timer ends when last key is pressed", function() {
+
+    });
   });
 });
 
