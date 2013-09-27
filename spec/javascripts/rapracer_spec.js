@@ -181,6 +181,7 @@ describe("RapRacer", function() {
 
     it("timer ends when last word is typed correctly", function() {
       goToEndOfLyric();
+      textbox.dispatchEvent(new Event('keydown'));
       expect(RapRacer.hasFinished()).toBeTruthy();
     });
 
