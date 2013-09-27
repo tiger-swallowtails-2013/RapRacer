@@ -204,15 +204,7 @@ describe("animation", function() {
     expect(character.calcCharacterMovement()).toBeGreaterThan(12.4)
   });
 
-  // it('should call character.handleInput', function() {
-  //   spyOn(character, 'handleInput');
-
-  //   textbox.dispatchEvent(new Event('input'));
-    
-  //   expect(character.handleInput).toHaveBeenCalled();
-  // })
   it('should move the character based on RapRacer going to next word', function() {
-    // textbox.dispatchEvent(new Event('input'));
     RapRacer.goToNextWord()
     expect(parseFloat(character_image.style.left)).toBeGreaterThan(12.4);
 
