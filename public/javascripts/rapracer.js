@@ -31,6 +31,7 @@ var RapRacer = (function() {
 
     finish: function() {
       timer.stop();
+      this.showScore();
     },
 
     playerTime: function() {
@@ -114,9 +115,25 @@ var RapRacer = (function() {
       }
 
       return !!this.lyric.currentWord().match(regex);
+    },
+
+    __wordsPerMinute: function() {
+      var total_words = this.lyric.lyricArray().length,
+          total_time  = timer.totalRaceTime() / 60;
+
+      console.log(timer.totalRaceTime());
+
+      return total_words / total_time;
+    },
+
+    showScore: function() {
+      var score_element = document.querySelector('#score');
+      score_element.innerHTML = 'WPM: ' + Math.floor(this.__wordsPerMinute());
     }
   };
+
 })();
+
 
 var inputChecker = {
 
