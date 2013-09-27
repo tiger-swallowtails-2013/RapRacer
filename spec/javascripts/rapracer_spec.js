@@ -67,6 +67,13 @@ describe("RapRacer", function() {
   var textbox;
   var dom_lyric, lyric_text;
 
+  function goToEndOfLyric() {
+    var total_words = lyric_text.split(" ").length;
+    while (total_words--) {
+      RapRacer.goToNextWord();
+    }
+  }
+
   beforeEach(function() {
     lyric_text = "Let the suicide doors up I threw suicides";
     dom_lyric = document.createElement('div');
@@ -153,19 +160,10 @@ describe("RapRacer", function() {
   });
 
   it("when user finishes typing the full lyric, no word is highlighted", function() {
-    var total_words = lyric_text.split(" ").length;
-    while (total_words--) {
-      RapRacer.goToNextWord();
-    }
+    goToEndOfLyric();
     expect(dom_lyric.innerHTML).toEqual(lyric_text);
   });
 
-  xit("should print the users score after completion", function() {
-    var total_words = lyric_text.split(" ").length;
-    while (total_words--) {
-      RapRacer.goToNextWord();
-    }
-  });
 
   describe("handles game start and finish", function() {
     it("timer start when first key is pressed", function() {
@@ -181,9 +179,17 @@ describe("RapRacer", function() {
       expect(RapRacer.start.callCount).toEqual(1);
     });
 
-    xit("timer ends when last key is pressed", function() {
-
+    it("timer ends when last word is typed correctly", function() {
+      goToEndOfLyric();
+      expect(RapRacer.hasFinished()).toBeTruthy();
     });
+
+    // xit("should print the users score after completion", function() {
+    //   var total_words = lyric_text.split(" ").length;
+    //   while (total_words--) {
+    //     RapRacer.goToNextWord();
+    //   }
+    // });
   });
 });
 
