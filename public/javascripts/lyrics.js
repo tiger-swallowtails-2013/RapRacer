@@ -11,8 +11,8 @@ Lyric.prototype.text = function() {
   return this.lyric = this.lyric || this.element().innerText;
 };
 
-Lyric.prototype.lengthOf = function () {
-  return this.text().length
+Lyric.prototype.word_count = function () {
+  return this.lyricArray().length
 }
 
 Lyric.prototype.lyricArray = function() {
