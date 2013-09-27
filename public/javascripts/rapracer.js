@@ -63,15 +63,18 @@ var RapRacer = (function() {
         }
       });
 
+      self.__bindStartEventThatRunsOnlyOnce();
+    },
+
+    __bindStartEventThatRunsOnlyOnce: function() {
+      var self = this;
 
       var inputStartListener = function() {
         self.start();
         input.removeEventListener('keydown', inputStartListener);
       };
+      
       input.addEventListener('keydown', inputStartListener);
-
-
-
     },
 
     __isLastCharASpace: function() {
