@@ -24,10 +24,15 @@ Lyric.prototype.nextWord = function() {
   this.highlightText();
 };
 
+Lyric.prototype.isCurrentWordDefined = function() {
+  return typeof this.currentWord() !== "undefined";
+};
+
 Lyric.prototype.highlightText = function() {
-  if (this.current_word_index >= this.lyricArray().length) {
+  if (!this.isCurrentWordDefined()) {
     return this.element().innerHTML = this.lyric;
   }
+  
 
   // soft duplication of array
   var temp = this.lyricArray().slice(0);
