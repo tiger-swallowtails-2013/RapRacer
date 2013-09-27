@@ -64,7 +64,7 @@ describe("userFeedback", function() {
 });
 
 describe("RapRacer", function() {
-  var textbox;
+  var textbox, score;
   var dom_lyric, lyric_text;
 
   function goToEndOfLyric() {
@@ -81,9 +81,14 @@ describe("RapRacer", function() {
     dom_lyric.innerHTML = lyric_text;
     document.body.appendChild(dom_lyric);
     
-    textbox = document.createElement('textarea');
+    textbox = document.createElement('input');
+    textbox.type = 'text';
     textbox.id = 'user_input';
     document.body.appendChild(textbox);
+
+    score = document.createElement('div');
+    score.id = 'score';
+    document.body.appendChild(score);
 
     RapRacer.init();
   });
@@ -91,6 +96,7 @@ describe("RapRacer", function() {
   afterEach(function() {
     document.body.removeChild(dom_lyric);
     document.body.removeChild(textbox);
+    document.body.removeChild(score);
   });
 
   it(".hasStarted() returns false if the game didn't start", function() {
@@ -185,12 +191,11 @@ describe("RapRacer", function() {
       expect(RapRacer.hasFinished()).toBeTruthy();
     });
 
-    // xit("should print the users score after completion", function() {
-    //   var total_words = lyric_text.split(" ").length;
-    //   while (total_words--) {
-    //     RapRacer.goToNextWord();
-    //   }
-    // });
+    it("should print the users score after completion", function() {
+      goToEndOfLyric();
+      textbox.dispatchEvent(new Event('keydown'));
+      expect(score.innerHTML).toContain('WPM: ');
+    });
   });
 });
 
