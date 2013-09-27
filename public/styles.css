@@ -1,4 +1,4 @@
-.current {
+.highlighted {
   background-color: blue;
 }
 
@@ -12,7 +12,6 @@
     border: solid black 1px;
     margin:15px;
     padding:15px;
-    left:0%;
 
     -webkit-transition: left 700ms ease;
     -moz-transition: left 700ms ease;
@@ -21,3 +20,6 @@
     transition: left 700ms ease;   
 }
 
+.error {
+    border: 3px solid red;
+}
