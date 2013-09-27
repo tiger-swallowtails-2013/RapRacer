@@ -168,6 +168,50 @@ describe("RapRacer", function() {
   });
 });
 
+describe("animation", function() {
+  
+  beforeEach(function() {
+    lyric_text = "Let the suicide doors up I threw suicides";
+    dom_lyric = document.createElement('div');
+    dom_lyric.id = 'lyric';
+    dom_lyric.innerHTML = lyric_text;
+    document.body.appendChild(dom_lyric);
+    
+    character_image = document.createElement('div');
+    character_image.id = 'character_image';
+    character_image.style.left = '0%';
+    document.body.appendChild(character_image);
+    
+    character_position = character_image.style.left;
+    textbox = document.createElement('textarea');
+    textbox.id = 'user_input';
+    document.body.appendChild(textbox);
+  });
+
+  afterEach(function() {
+    // document.body.removeChild(dom_lyric)
+    // document.body.removeChild(character_image)
+    // document.body.removeChild(textbox)
+
+  });
+
+  it("should know the length of the rap lyric", function() {
+    expect(character.rapLength()).toEqual(41)
+  });
+
+  it('should calcuate character movement based on rapLength', function() {
+    expect(character.calcCharacterMovement()).toBeGreaterThan(2.4)
+  });
+
+  it('should move the character based on what calcCharacterMovement() returns', function() {
+    textbox.dispatchEvent(new Event('input'));
+
+    expect(parseInt(character_position)).toBeGreaterThan(2.4);
+
+
+  })
+})
+
 
 
 
