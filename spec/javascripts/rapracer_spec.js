@@ -68,9 +68,10 @@ describe("RapRacer", function() {
   var dom_lyric, lyric_text;
 
   beforeEach(function() {
+    lyric_text = "Let the suicide doors up I threw suicides";
     dom_lyric = document.createElement('div');
     dom_lyric.id = 'lyric';
-    dom_lyric.innerHTML = "Let the suicide doors up I threw suicides";
+    dom_lyric.innerHTML = lyric_text;
     document.body.appendChild(dom_lyric);
     
     textbox = document.createElement('textarea');
@@ -149,6 +150,21 @@ describe("RapRacer", function() {
     textbox.value = "Let ";
     textbox.dispatchEvent(new Event('input'));
     expect(RapRacer.lyric.currentWord()).toEqual('the');
+  });
+
+  it("when user finishes typing the full lyric, no word is highlighted", function() {
+    var total_words = lyric_text.split(" ").length;
+    while (total_words--) {
+      RapRacer.goToNextWord();
+    }
+    expect(dom_lyric.innerHTML).toEqual(lyric_text);
+  });
+
+  it("should print the users score after completion", function() {
+    var total_words = lyric_text.split(" ").length;
+    while (total_words--) {
+      RapRacer.goToNextWord();
+    }
   });
 });
 
