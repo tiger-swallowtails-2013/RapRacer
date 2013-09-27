@@ -38,14 +38,44 @@ var RapRacer = (function() {
     bindListeners: function() {
       var self = this;
       input.addEventListener('input', function(e) {
-        if (self.matchWord(input.value)) {
+        var isValidMatch = false;
+
+        if (self.isLastCharASpace()) {
+          if (self.isExactMatch()) {
+            isValidMatch = true;
+            self.goToNextWord();
+            input.value = '';
+          }
+        }
+        else {
+          if (self.matchWord(input.value)) {
+            isValidMatch = true;
+          }
+        }
+            
+        if (isValidMatch) {
           input.className = '';
-          console.log(e);
         }
         else {
           input.className = 'error';
         }
       });
+    },
+
+    isLastCharASpace: function() {
+      var isSpace = false;
+      if (input.value.length) {
+        isSpace = input.value[input.value.length - 1] === ' ';
+      }
+      return isSpace;
+    },
+
+    isExactMatch: function() {
+      return (this.valueWithoutSpace() === this.lyric.currentWord());
+    },
+
+    valueWithoutSpace: function() {
+      return input.value.substr(0, input.value.length - 1);
     },
 
     matchWord: function(value) {

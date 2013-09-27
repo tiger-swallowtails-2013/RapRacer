@@ -20,3 +20,6 @@
     transition: left 700ms ease;   
 }
 
+.error {
+    border: 3px solid red;
+}
