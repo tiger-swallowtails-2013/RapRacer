@@ -4,13 +4,12 @@ require_relative 'models/song.rb'
 require "sinatra/activerecord"
 set :database, "sqlite3:///foo.sqlite3"
 
-# song = Song.new("Jay-z-99-problems-lyrics")
+
+
+lyric = Lyric.find(rand(Lyric.count(:all)))
 
 get '/' do  
-  # @lyric = song.lyric_text
-  # @title = song.title
-  # @artist = song.artist
-  # @explanation = song.explanation
+  @text = @lyric.text
   erb :home
 end
 
