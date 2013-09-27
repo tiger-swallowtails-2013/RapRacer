@@ -64,8 +64,20 @@ var RapRacer = (function() {
       });
 
       self.__bindStartEventThatRunsOnlyOnce();
+      self.__bindEndEventThatRunsOnlyOnce();
+
     },
 
+    __bindEndEventThatRunsOnlyOnce: function () {
+      var self = this;
+
+      var inputEndListener = function() {
+        if (!self.lyric.isCurrentWordDefined()) {
+          self.finish();
+        }
+      };
+      input.addEventListener('keydown', inputEndListener);
+    },
     __bindStartEventThatRunsOnlyOnce: function() {
       var self = this;
 
@@ -73,7 +85,7 @@ var RapRacer = (function() {
         self.start();
         input.removeEventListener('keydown', inputStartListener);
       };
-      
+
       input.addEventListener('keydown', inputStartListener);
     },
 
