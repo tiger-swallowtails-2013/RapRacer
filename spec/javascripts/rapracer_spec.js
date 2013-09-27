@@ -10,20 +10,20 @@ describe("wordChecker", function() {
 
 describe("inputWordChecker", function() {
   beforeEach(function() {
-    createDomElement('textarea','user_bad_input')
+    createDomElement('textarea','user_bad_input');
     document.getElementById('user_bad_input').value = "raorao";
 
-    createDomElement('textarea','user_good_input')
+    createDomElement('textarea','user_good_input');
     document.getElementById('user_good_input').value = "Let";
 
-    createDomElement('span','current_word')
+    createDomElement('span','current_word');
     document.getElementById('current_word').innerText = "Let";
   });
 
   afterEach(function() {
-    document.body.removeChild(document.getElementById('user_bad_input'))
-    document.body.removeChild(document.getElementById('user_good_input'))
-    document.body.removeChild(document.getElementById('current_word'))
+    document.body.removeChild(document.getElementById('user_bad_input'));
+    document.body.removeChild(document.getElementById('user_good_input'));
+    document.body.removeChild(document.getElementById('current_word'));
   });
 
   it ("should get values of two ids, return false if no match", function() {
@@ -38,20 +38,20 @@ describe("inputWordChecker", function() {
 
 describe("userFeedback", function() {
     beforeEach(function() {
-    createDomElement('textarea','user_bad_input')
+    createDomElement('textarea','user_bad_input');
     document.getElementById('user_bad_input').value = "raorao";
 
-    createDomElement('textarea','user_good_input')
+    createDomElement('textarea','user_good_input');
     document.getElementById('user_good_input').value = "Let";
 
-    createDomElement('span','current_word')
+    createDomElement('span','current_word');
     document.getElementById('current_word').innerText = "Let";
   });
 
   afterEach(function() {
-    document.body.removeChild(document.getElementById('user_bad_input'))
-    document.body.removeChild(document.getElementById('user_good_input'))
-    document.body.removeChild(document.getElementById('current_word'))
+    document.body.removeChild(document.getElementById('user_bad_input'));
+    document.body.removeChild(document.getElementById('user_good_input'));
+    document.body.removeChild(document.getElementById('current_word'));
   });
 
   it("should let the user know if the WordChecker returned true", function() {
@@ -64,16 +64,26 @@ describe("userFeedback", function() {
 });
 
 describe("RapRacer", function() {
+  var textbox;
   var dom_lyric, lyric_text;
 
   beforeEach(function() {
+    dom_lyric = document.createElement('div');
+    dom_lyric.id = 'lyric';
+    dom_lyric.innerHTML = "Let the suicide doors up I threw suicides";
+    document.body.appendChild(dom_lyric);
+    
+    textbox = document.createElement('textarea');
+    textbox.id = 'user_input';
+    document.body.appendChild(textbox);
 
-    var fakeLyric = {
-      nextWord: function() {}
-    }
-    RapRacer.init(fakeLyric);
+    RapRacer.init();
   });
 
+  afterEach(function() {
+    document.body.removeChild(dom_lyric);
+    document.body.removeChild(textbox);
+  });
 
   it(".hasStarted() returns false if the game didn't start", function() {
     expect(RapRacer.hasStarted()).toBeFalsy();
@@ -101,9 +111,45 @@ describe("RapRacer", function() {
       RapRacer.finish();
       expect(RapRacer.playerTime()).toBeGreaterThan(0.049);
     });
-  })
+  });
 
+  it("user input event should add error class to the text box if current value doesn't match with current word", function() {
+    textbox.value = 'myVal';
+    textbox.dispatchEvent(new Event('input'));
+    expect(textbox.className).toEqual('error');
+  });
 
+  it("treats empty values as valid matches", function() {
+    textbox.value = '';
+    textbox.dispatchEvent(new Event('input'));
+    expect(textbox.className).not.toEqual('error');
+  });
+
+  it("handle exceptions in case of invalid inputs", function() {
+    textbox.value = '\\?';
+    textbox.dispatchEvent(new Event('input'));
+    expect(textbox.className).toEqual('error');
+  });
+
+  it("user input event should not add error class to the text box if current value matches with current word", function() {
+    textbox.value = 'L';
+    textbox.dispatchEvent(new Event('input'));
+    expect(textbox.className).not.toEqual('error');
+  });
+
+  it("valid user input should remove 'error' class to the text box", function() {
+    textbox.value = 'Ler';
+    textbox.dispatchEvent(new Event('input'));
+    textbox.value = 'Le';
+    textbox.dispatchEvent(new Event('input'));
+    expect(textbox.className).not.toEqual('error');
+  });
+
+  it("go to the next word if the last character was ' ' & match is the exact current word", function() {
+    textbox.value = "Let ";
+    textbox.dispatchEvent(new Event('input'));
+    expect(RapRacer.lyric.currentWord()).toEqual('the');
+  });
 });
 
 
