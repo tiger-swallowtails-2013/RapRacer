@@ -186,8 +186,6 @@ describe("animation", function() {
     textbox = document.createElement('textarea');
     textbox.id = 'user_input';
     document.body.appendChild(textbox);
-
-    character.moveCharacter('user_input', 'input', 0);
   });
 
   afterEach(function() {
