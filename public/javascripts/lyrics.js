@@ -11,6 +11,10 @@ Lyric.prototype.text = function() {
   return this.lyric = this.lyric || this.element().innerText;
 };
 
+Lyric.prototype.word_count = function () {
+  return this.lyricArray().length
+}
+
 Lyric.prototype.lyricArray = function() {
   return this.lyric_words = this.lyric_words || this.text().split(' ');
 };

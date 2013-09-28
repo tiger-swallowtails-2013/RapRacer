@@ -77,7 +77,7 @@ describe("RapRacer", function() {
     textbox = document.createElement('textarea');
     textbox.id = 'user_input';
     document.body.appendChild(textbox);
-
+    spyOn(character, 'moveCharacter');
     RapRacer.init();
   });
 
@@ -85,6 +85,7 @@ describe("RapRacer", function() {
     document.body.removeChild(dom_lyric);
     document.body.removeChild(textbox);
   });
+ 
 
   it(".hasStarted() returns false if the game didn't start", function() {
     expect(RapRacer.hasStarted()).toBeFalsy();
@@ -167,6 +168,47 @@ describe("RapRacer", function() {
     }
   });
 });
+
+describe("animation", function() {
+  
+  beforeEach(function() {
+    lyric_text = "Let the suicide doors up I threw suicides";
+    dom_lyric = document.createElement('div');
+    dom_lyric.id = 'lyric';
+    dom_lyric.innerHTML = lyric_text;
+    document.body.appendChild(dom_lyric);
+    
+    character_image = document.createElement('div');
+    character_image.id = 'character_image';
+    character_image.style.left = '0%';
+    document.body.appendChild(character_image);
+    
+    textbox = document.createElement('textarea');
+    textbox.id = 'user_input';
+    document.body.appendChild(textbox);
+  });
+
+  afterEach(function() {
+    document.body.removeChild(dom_lyric)
+    document.body.removeChild(character_image)
+    document.body.removeChild(textbox)
+  });
+
+  it("should know the number of words in the rap lyric", function() {
+    expect(character.words()).toEqual(8)
+  });
+
+  it('should calcuate character movement based on rapLength', function() {
+    expect(character.calcCharacterMovement()).toBeGreaterThan(12.4)
+  });
+
+  it('should move the character based on RapRacer going to next word', function() {
+    RapRacer.goToNextWord()
+    expect(parseFloat(character_image.style.left)).toBeGreaterThan(12.4);
+
+
+  })
+})
 
 
 

@@ -10,7 +10,9 @@ var RapRacer = (function() {
       timer = new TimingRace();
       this.bindListeners();
     },
+
     goToNextWord: function() {
+      character.moveCharacter();
       this.lyric.nextWord();
     },
 
