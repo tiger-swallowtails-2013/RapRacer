@@ -133,22 +133,3 @@ var RapRacer = (function() {
   };
 
 })();
-
-
-var inputChecker = {
-
-  wordChecker: function(word1,word2) {
-    return word1 === word2;
-  },
-
-  inputWordChecker: function(input_id,check_id) {
-    var inputWord = document.getElementById(input_id).value;
-    var checkWord = document.getElementById(check_id).innerText;
-    return this.wordChecker(inputWord,checkWord);
-  },
-
-  userFeedback: function(input_id, check_id) {
-    return this.inputWordChecker(input_id, check_id);
-  }
-
-};
