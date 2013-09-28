@@ -31,6 +31,7 @@ var RapRacer = (function() {
 
     finish: function() {
       timer.stop();
+      this.showScore();
     },
 
     playerTime: function() {
@@ -42,15 +43,18 @@ var RapRacer = (function() {
       input.addEventListener('input', function(e) {
         var isValidMatch = false;
 
-        if (self.isLastCharASpace()) {
-          if (self.isExactMatch()) {
+        if (self.__isLastCharASpace()) {
+          if (self.__isExactMatch()) {
             isValidMatch = true;
             self.goToNextWord();
             input.value = '';
+            if (!self.lyric.isCurrentWordDefined()) {
+              self.finish();
+            }
           }
         }
         else {
-          if (self.matchWord(input.value)) {
+          if (self.__matchWord(input.value)) {
             isValidMatch = true;
           }
         }
@@ -62,9 +66,22 @@ var RapRacer = (function() {
           input.className = 'error';
         }
       });
+
+      self.__bindStartEventThatRunsOnlyOnce();
     },
 
-    isLastCharASpace: function() {
+    __bindStartEventThatRunsOnlyOnce: function() {
+      var self = this;
+
+      var inputStartListener = function() {
+        self.start();
+        input.removeEventListener('keydown', inputStartListener);
+      };
+
+      input.addEventListener('keydown', inputStartListener);
+    },
+
+    __isLastCharASpace: function() {
       var isSpace = false;
       if (input.value.length) {
         isSpace = input.value[input.value.length - 1] === ' ';
@@ -72,15 +89,15 @@ var RapRacer = (function() {
       return isSpace;
     },
 
-    isExactMatch: function() {
-      return (this.valueWithoutSpace() === this.lyric.currentWord());
+    __isExactMatch: function() {
+      return (this.__valueWithoutSpace() === this.lyric.currentWord());
     },
 
-    valueWithoutSpace: function() {
+    __valueWithoutSpace: function() {
       return input.value.substr(0, input.value.length - 1);
     },
 
-    matchWord: function(value) {
+    __matchWord: function(value) {
       var regex;
       try {
         regex = new RegExp('^' + value);
@@ -89,24 +106,19 @@ var RapRacer = (function() {
       }
 
       return !!this.lyric.currentWord().match(regex);
+    },
+
+    __wordsPerMinute: function() {
+      var total_words = this.lyric.lyricArray().length,
+          total_time  = timer.totalRaceTime() / 60;
+
+      return total_words / total_time;
+    },
+
+    showScore: function() {
+      var score_element = document.querySelector('#score');
+      score_element.innerHTML = 'WPM: ' + Math.floor(this.__wordsPerMinute());
     }
   };
+
 })();
-
-var inputChecker = {
-
-  wordChecker: function(word1,word2) {
-    return word1 === word2;
-  },
-
-  inputWordChecker: function(input_id,check_id) {
-    var inputWord = document.getElementById(input_id).value;
-    var checkWord = document.getElementById(check_id).innerText;
-    return this.wordChecker(inputWord,checkWord);
-  },
-
-  userFeedback: function(input_id, check_id) {
-    return this.inputWordChecker(input_id, check_id);
-  }
-
-};
