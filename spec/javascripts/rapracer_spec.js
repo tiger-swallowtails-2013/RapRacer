@@ -1,71 +1,13 @@
-describe("wordChecker", function() {
-  it("should check words, return true if words match", function() {
-    expect(inputChecker.wordChecker("word","word")).toEqual(true);
-  });
-
-  it("should check words, return false if they don't match", function() {
-    expect(inputChecker.wordChecker("word","otherword")).toEqual(false);
-  });
-});
-
-describe("inputWordChecker", function() {
-  beforeEach(function() {
-    createDomElement('textarea','user_bad_input');
-    document.getElementById('user_bad_input').value = "raorao";
-
-    createDomElement('textarea','user_good_input');
-    document.getElementById('user_good_input').value = "Let";
-
-    createDomElement('span','current_word');
-    document.getElementById('current_word').innerText = "Let";
-  });
-
-  afterEach(function() {
-    document.body.removeChild(document.getElementById('user_bad_input'));
-    document.body.removeChild(document.getElementById('user_good_input'));
-    document.body.removeChild(document.getElementById('current_word'));
-  });
-
-  it ("should get values of two ids, return false if no match", function() {
-    expect(inputChecker.inputWordChecker('user_bad_input','current_word')).toEqual(false);
-  });
-
-
-  it ("should get values of two ids, return true if match", function() {
-    expect(inputChecker.inputWordChecker('user_good_input','current_word')).toEqual(true);
-  });
-});
-
-describe("userFeedback", function() {
-    beforeEach(function() {
-    createDomElement('textarea','user_bad_input');
-    document.getElementById('user_bad_input').value = "raorao";
-
-    createDomElement('textarea','user_good_input');
-    document.getElementById('user_good_input').value = "Let";
-
-    createDomElement('span','current_word');
-    document.getElementById('current_word').innerText = "Let";
-  });
-
-  afterEach(function() {
-    document.body.removeChild(document.getElementById('user_bad_input'));
-    document.body.removeChild(document.getElementById('user_good_input'));
-    document.body.removeChild(document.getElementById('current_word'));
-  });
-
-  it("should let the user know if the WordChecker returned true", function() {
-    expect(inputChecker.userFeedback('user_good_input', 'current_word')).toEqual(true);
-  });
-
-  it("should let the user know if the WordChecker returned false", function() {
-    expect(inputChecker.userFeedback('user_bad_input', 'current_word')).toEqual(false);
-  });
-});
-
 describe("RapRacer", function() {
-  var textbox;
+  var textbox, score;
   var dom_lyric, lyric_text;
+
+  function goToEndOfLyric() {
+    var total_words = lyric_text.split(" ").length;
+    while (total_words--) {
+      RapRacer.goToNextWord();
+    }
+  }
 
   beforeEach(function() {
     lyric_text = "Let the suicide doors up I threw suicides";
@@ -74,9 +16,15 @@ describe("RapRacer", function() {
     dom_lyric.innerHTML = lyric_text;
     document.body.appendChild(dom_lyric);
     
-    textbox = document.createElement('textarea');
+    textbox = document.createElement('input');
+    textbox.type = 'text';
     textbox.id = 'user_input';
     document.body.appendChild(textbox);
+
+    score = document.createElement('div');
+    score.id = 'score';
+    document.body.appendChild(score);
+
     spyOn(character, 'moveCharacter');
     RapRacer.init();
   });
@@ -84,6 +32,7 @@ describe("RapRacer", function() {
   afterEach(function() {
     document.body.removeChild(dom_lyric);
     document.body.removeChild(textbox);
+    document.body.removeChild(score);
   });
  
 
@@ -154,18 +103,45 @@ describe("RapRacer", function() {
   });
 
   it("when user finishes typing the full lyric, no word is highlighted", function() {
-    var total_words = lyric_text.split(" ").length;
-    while (total_words--) {
-      RapRacer.goToNextWord();
-    }
+    goToEndOfLyric();
     expect(dom_lyric.innerHTML).toEqual(lyric_text);
   });
 
-  it("should print the users score after completion", function() {
-    var total_words = lyric_text.split(" ").length;
-    while (total_words--) {
-      RapRacer.goToNextWord();
-    }
+
+  describe("handles game start and finish", function() {
+    it("timer start when first key is pressed", function() {
+      textbox.dispatchEvent(new Event('keydown'));
+      expect(RapRacer.hasStarted()).toBeTruthy();
+    });
+
+    it("timer starts only once", function() {
+      spyOn(RapRacer, 'start');
+      textbox.dispatchEvent(new Event('keydown'));
+      textbox.dispatchEvent(new Event('keydown'));
+      
+      expect(RapRacer.start.callCount).toEqual(1);
+    });
+
+    it("timer ends when last word is typed correctly", function() {
+      RapRacer.start();
+      var total_words = lyric_text.split(" ").length;
+      while (--total_words) {
+        RapRacer.goToNextWord();
+      }
+      textbox.value = 'suicides ';
+      textbox.dispatchEvent(new Event('input'));
+      expect(RapRacer.hasFinished()).toBeTruthy();
+    });
+
+    it("should print the users score after completion", function() {
+      var total_words = lyric_text.split(" ").length;
+      while (--total_words) {
+        RapRacer.goToNextWord();
+      }
+      textbox.value = 'suicides ';
+      textbox.dispatchEvent(new Event('input'));
+      expect(score.innerHTML).toContain('WPM: ');
+    });
   });
 });
 
@@ -189,28 +165,21 @@ describe("animation", function() {
   });
 
   afterEach(function() {
-    document.body.removeChild(dom_lyric)
-    document.body.removeChild(character_image)
-    document.body.removeChild(textbox)
+    document.body.removeChild(dom_lyric);
+    document.body.removeChild(character_image);
+    document.body.removeChild(textbox);
   });
 
   it("should know the number of words in the rap lyric", function() {
-    expect(character.words()).toEqual(8)
+    expect(character.words()).toEqual(8);
   });
 
   it('should calcuate character movement based on rapLength', function() {
-    expect(character.calcCharacterMovement()).toBeGreaterThan(12.4)
+    expect(character.calcCharacterMovement()).toBeGreaterThan(12.4);
   });
 
   it('should move the character based on RapRacer going to next word', function() {
-    RapRacer.goToNextWord()
+    RapRacer.goToNextWord();
     expect(parseFloat(character_image.style.left)).toBeGreaterThan(12.4);
-
-
-  })
-})
-
-
-
-
-
+  });
+});
