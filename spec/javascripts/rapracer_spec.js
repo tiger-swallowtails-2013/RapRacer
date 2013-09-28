@@ -123,14 +123,23 @@ describe("RapRacer", function() {
     });
 
     it("timer ends when last word is typed correctly", function() {
-      goToEndOfLyric();
-      textbox.dispatchEvent(new Event('keydown'));
+      RapRacer.start();
+      var total_words = lyric_text.split(" ").length;
+      while (--total_words) {
+        RapRacer.goToNextWord();
+      }
+      textbox.value = 'suicides ';
+      textbox.dispatchEvent(new Event('input'));
       expect(RapRacer.hasFinished()).toBeTruthy();
     });
 
     it("should print the users score after completion", function() {
-      goToEndOfLyric();
-      textbox.dispatchEvent(new Event('keydown'));
+      var total_words = lyric_text.split(" ").length;
+      while (--total_words) {
+        RapRacer.goToNextWord();
+      }
+      textbox.value = 'suicides ';
+      textbox.dispatchEvent(new Event('input'));
       expect(score.innerHTML).toContain('WPM: ');
     });
   });
@@ -156,28 +165,21 @@ describe("animation", function() {
   });
 
   afterEach(function() {
-    document.body.removeChild(dom_lyric)
-    document.body.removeChild(character_image)
-    document.body.removeChild(textbox)
+    document.body.removeChild(dom_lyric);
+    document.body.removeChild(character_image);
+    document.body.removeChild(textbox);
   });
 
   it("should know the number of words in the rap lyric", function() {
-    expect(character.words()).toEqual(8)
+    expect(character.words()).toEqual(8);
   });
 
   it('should calcuate character movement based on rapLength', function() {
-    expect(character.calcCharacterMovement()).toBeGreaterThan(12.4)
+    expect(character.calcCharacterMovement()).toBeGreaterThan(12.4);
   });
 
   it('should move the character based on RapRacer going to next word', function() {
-    RapRacer.goToNextWord()
+    RapRacer.goToNextWord();
     expect(parseFloat(character_image.style.left)).toBeGreaterThan(12.4);
-
-
-  })
-})
-
-
-
-
-
+  });
+});

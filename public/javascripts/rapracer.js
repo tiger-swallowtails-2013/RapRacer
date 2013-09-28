@@ -48,6 +48,9 @@ var RapRacer = (function() {
             isValidMatch = true;
             self.goToNextWord();
             input.value = '';
+            if (!self.lyric.isCurrentWordDefined()) {
+              self.finish();
+            }
           }
         }
         else {
@@ -65,20 +68,8 @@ var RapRacer = (function() {
       });
 
       self.__bindStartEventThatRunsOnlyOnce();
-      self.__bindEndEventThatRunsOnlyOnce();
-
     },
 
-    __bindEndEventThatRunsOnlyOnce: function () {
-      var self = this;
-
-      var inputEndListener = function() {
-        if (!self.lyric.isCurrentWordDefined()) {
-          self.finish();
-        }
-      };
-      input.addEventListener('keydown', inputEndListener);
-    },
     __bindStartEventThatRunsOnlyOnce: function() {
       var self = this;
 
@@ -120,8 +111,6 @@ var RapRacer = (function() {
     __wordsPerMinute: function() {
       var total_words = this.lyric.lyricArray().length,
           total_time  = timer.totalRaceTime() / 60;
-
-      console.log(timer.totalRaceTime());
 
       return total_words / total_time;
     },
