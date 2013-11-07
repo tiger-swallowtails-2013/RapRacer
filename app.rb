@@ -35,9 +35,12 @@ class Song
 
 end
 
-song = Song.new("Jay-z-99-problems-lyrics")
+get '/' do
+  erb :homepage
+end  
 
-get '/' do  
+get '/app' do 
+  song = Song.new("Dr-dre-nuthin-but-a-g-thang-lyrics") 
   @lyric = song.lyric_text
   @title = song.title
   @artist = song.artist
